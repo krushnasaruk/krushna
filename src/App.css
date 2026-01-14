@@ -1,0 +1,15 @@
+/* App specific styles if needed, mostly handled by index.css */
+.app-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  padding: 4rem 0;
+}
