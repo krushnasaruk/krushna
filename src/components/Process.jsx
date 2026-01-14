@@ -31,23 +31,35 @@ const steps = [
 
 const Process = () => {
     return (
-        <section id="process" className="container">
+        <section id="process" className="container" style={{ position: 'relative' }}>
             <div style={{ marginBottom: '5rem', textAlign: 'center' }}>
                 <h2 style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)' }}>The Journey</h2>
                 <p style={{ color: 'var(--color-dim)', marginTop: '1rem' }}>Your path to excellence, simplified.</p>
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '4rem', position: 'relative' }}>
-                {/* Vertical Line */}
+                {/* Vertical Line Container */}
                 <div style={{
                     position: 'absolute',
                     left: '2rem',
                     top: '0',
                     bottom: '0',
-                    width: '1px',
-                    background: 'var(--color-border)',
-                    zIndex: -1
-                }} />
+                    width: '2px', // Slightly wider for visibility
+                    zIndex: 0
+                }}>
+                    <motion.div
+                        initial={{ height: 0 }}
+                        whileInView={{ height: '100%' }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 1.5, ease: "easeInOut" }}
+                        style={{
+                            width: '100%',
+                            height: '100%',
+                            background: 'linear-gradient(to bottom, var(--color-dim), var(--color-text))',
+                            opacity: 0.3
+                        }}
+                    />
+                </div>
 
                 {steps.map((step, index) => (
                     <motion.div
@@ -56,11 +68,14 @@ const Process = () => {
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true, margin: "-100px" }}
                         transition={{ duration: 0.6, delay: index * 0.1 }}
+                        className="process-step"
                         style={{
                             display: 'flex',
                             gap: '3rem',
                             alignItems: 'flex-start',
-                            paddingLeft: '2rem'
+                            paddingLeft: '2rem',
+                            position: 'relative',
+                            zIndex: 1
                         }}
                     >
                         <div style={{
@@ -73,7 +88,8 @@ const Process = () => {
                             justifyContent: 'center',
                             borderRadius: '50%',
                             fontWeight: 600,
-                            transform: 'translateX(-50%)' // Center on line
+                            transform: 'translateX(-50%)', // Center on line
+                            boxShadow: '0 0 15px rgba(0,0,0,0.5)'
                         }}>
                             {step.number}
                         </div>
@@ -85,6 +101,13 @@ const Process = () => {
                     </motion.div>
                 ))}
             </div>
+            <style>{`
+                @media (max-width: 768px) {
+                    .process-step {
+                        gap: 1.5rem !important;
+                    }
+                }
+            `}</style>
         </section>
     );
 };

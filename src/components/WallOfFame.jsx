@@ -20,18 +20,17 @@ const WallOfFame = () => {
     return (
         <section id="wall-of-fame" style={{ padding: '8rem 0', overflow: 'hidden', position: 'relative' }}>
             <div className="container" style={{ textAlign: 'center', marginBottom: '4rem' }}>
-                <h2 style={{ fontSize: 'clamp(3rem, 6vw, 6rem)', lineHeight: 1 }}>HALL OF <span className="text-gradient">EXCELLENCE</span></h2>
-                <p style={{ marginTop: '1rem', color: 'var(--color-dim)' }}>Click on a portrait to read their story.</p>
+                <h2 style={{ fontSize: 'clamp(3rem, 6vw, 6rem)', lineHeight: 1 }}>ALUMNI <span className="text-gradient">HONORS</span></h2>
+                <p style={{ marginTop: '1rem', color: 'var(--color-dim)', fontFamily: 'var(--font-display)', fontStyle: 'italic', letterSpacing: '0.05em' }}>Celebrating the distinguished achievements of our scholars.</p>
             </div>
 
-            <div className="marquee-container" style={{ display: 'flex', width: '100%', overflow: 'hidden' }}>
+            <div className="marquee-container" style={{ display: 'flex', width: '100%', overflow: 'hidden', paddingBottom: '2rem' }}>
                 <motion.div
                     className="marquee-track"
                     animate={{ x: ["0%", "-50%"] }} // Move halfway because list is tripled
-                    transition={{ repeat: Infinity, ease: "linear", duration: 40 }}
-                    style={{ display: 'flex', gap: '2rem', width: 'max-content' }}
-                    whileHover={{ animationPlayState: 'paused' }} // CSS handling for pause is smoother usually, but Framer works too
-                    onHoverStart={() => { /* Pause logic if manual usually involves state, but simpler to use CSS class for pause */ }}
+                    transition={{ repeat: Infinity, ease: "linear", duration: 45 }}
+                    style={{ display: 'flex', gap: '3rem', width: 'max-content', paddingLeft: '3rem' }}
+                    whileHover={{ animationPlayState: 'paused' }}
                 >
                     {marqueeStudents.map((student, index) => (
                         <div
@@ -39,36 +38,40 @@ const WallOfFame = () => {
                             className="student-card"
                             onClick={() => setSelectedStudent(student)}
                             style={{
-                                width: '300px',
-                                height: '450px',
+                                width: '320px',
+                                height: '480px',
                                 position: 'relative',
                                 flexShrink: 0,
                                 cursor: 'pointer',
-                                borderRadius: '12px',
-                                overflow: 'hidden'
+                                borderRadius: '4px', // Sharper corners for academic look
+                                overflow: 'hidden',
+                                border: '1px solid var(--color-border)',
+                                background: 'var(--color-bg)',
+                                boxShadow: '0 4px 20px rgba(0,0,0,0.2)'
                             }}
                         >
+                            <div style={{ position: 'absolute', top: '1rem', right: '1rem', zIndex: 2, background: 'var(--color-accent)', color: 'white', padding: '0.25rem 0.75rem', fontSize: '0.8rem', fontWeight: 600, borderRadius: '2px' }}>
+                                Class of '{student.year}
+                            </div>
+
                             <img
                                 src={student.img}
                                 alt={student.name}
-                                style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'grayscale(100%)', transition: 'all 0.3s' }}
+                                style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'sepia(30%) contrast(110%)', transition: 'all 0.5s ease' }}
                             />
+
                             <div className="overlay" style={{
                                 position: 'absolute', bottom: 0, left: 0, width: '100%',
-                                padding: '1.5rem', background: 'linear-gradient(to top, rgba(0,0,0,0.9), transparent)',
-                                opacity: 0, transition: 'opacity 0.3s'
+                                padding: '2rem 1.5rem', background: 'linear-gradient(to top, #0b1120 10%, transparent)',
+                                opacity: 1, transition: 'all 0.3s'
                             }}>
-                                <h3 style={{ color: 'white', margin: 0 }}>{student.name}</h3>
-                                <p style={{ color: '#ccc', fontSize: '0.9rem' }}>{student.uni}</p>
+                                <h3 style={{ color: 'var(--color-text)', margin: 0, fontFamily: 'var(--font-display)', fontSize: '1.5rem', textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>{student.name}</h3>
+                                <p style={{ color: 'var(--color-accent)', fontSize: '0.9rem', fontWeight: 500, letterSpacing: '0.05em', textTransform: 'uppercase', marginTop: '0.5rem' }}>{student.uni}</p>
                             </div>
 
                             <style>{`
-                                .student-card:hover img { filter: grayscale(0%); transform: scale(1.05); }
-                                .student-card:hover .overlay { opacity: 1; }
-                                .marquee-track:hover { animation-play-state: paused !important; } 
-                                /* Note: Framer Motion animates inline styles, so CSS hover pause acts on a wrapper usually, 
-                                   or we accept that hover might not effectively pause JS animation without state. 
-                                   Let's rely on Framer Motion's hover variants or a wrapping div. */
+                                .student-card:hover img { filter: sepia(0%) contrast(100%) scale(1.05); }
+                                .student-card:hover { border-color: var(--color-accent); transform: translateY(-5px); transition: transform 0.3s; }
                             `}</style>
                         </div>
                     ))}
@@ -89,6 +92,7 @@ const WallOfFame = () => {
                         }}
                     >
                         <motion.div
+                            className="modal-content"
                             initial={{ scale: 0.9, y: 20 }}
                             animate={{ scale: 1, y: 0 }}
                             exit={{ scale: 0.9, y: 20 }}
@@ -96,10 +100,11 @@ const WallOfFame = () => {
                             style={{
                                 background: 'var(--color-bg)', border: '1px solid var(--color-border)',
                                 maxWidth: '900px', width: '100%', display: 'grid', gridTemplateColumns: 'minmax(300px, 1fr) 1.5fr',
-                                borderRadius: '20px', overflow: 'hidden', boxShadow: '0 25px 50px -12px rgba(0,0,0,0.5)'
+                                borderRadius: '20px', overflow: 'hidden', boxShadow: '0 25px 50px -12px rgba(0,0,0,0.5)',
+                                maxHeight: '90vh', overflowY: 'auto'
                             }}
                         >
-                            <div style={{ height: '100%', minHeight: '400px' }}>
+                            <div className="modal-image" style={{ height: '100%', minHeight: '400px' }}>
                                 <img src={selectedStudent.img} alt={selectedStudent.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                             </div>
                             <div style={{ padding: '3rem', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
@@ -130,6 +135,19 @@ const WallOfFame = () => {
                                     Close Story
                                 </button>
                             </div>
+                            <style>{`
+                                @media (max-width: 768px) {
+                                    .modal-content {
+                                        grid-template-columns: 1fr !important;
+                                        display: flex !important;
+                                        flex-direction: column;
+                                    }
+                                    .modal-image {
+                                        min-height: 250px !important;
+                                        height: 250px !important;
+                                    }
+                                }
+                            `}</style>
                         </motion.div>
                     </motion.div>
                 )}

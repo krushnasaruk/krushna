@@ -4,24 +4,36 @@
   --font-display: 'Playfair Display', serif;
   --font-body: 'Inter', sans-serif;
 
-  /* Default Dark Mode Variables */
-  --color-bg: #050505;
-  --color-text: #f0f0f0;
-  --color-accent: #ffffff;
-  --color-dim: #888888;
-  --color-border: #222222;
-  --stroke-color: #ffffff;
+  /* Modern Ivy Theme Variables */
+  --color-bg: #0b1120;
+  /* Deep Navy */
+  --color-text: #f8fafc;
+  /* Cream/Off-white */
+  --color-accent: #d97706;
+  /* Burnished Gold */
+  --color-dim: #94a3b8;
+  /* Muted Slate */
+  --color-border: #1e293b;
+  /* Dark Blue-Grey */
+  --stroke-color: #d97706;
+  /* Gold Stroke */
 
   --transition-smooth: cubic-bezier(0.6, 0.01, -0.05, 0.9);
 }
 
 [data-theme='light'] {
-  --color-bg: #ffffff;
-  --color-text: #1a1a1a;
-  --color-accent: #000000;
-  --color-dim: #555555;
-  --color-border: #e2e2e2;
-  --stroke-color: #000000;
+  --color-bg: #fdfbf7;
+  /* Warm Paper */
+  --color-text: #0b1120;
+  /* Deep Navy */
+  --color-accent: #b45309;
+  /* Dark Gold/Bronze */
+  --color-dim: #64748b;
+  /* Slate */
+  --color-border: #e2e8f0;
+  /* Light Grey */
+  --stroke-color: #b45309;
+  /* Bronze Stroke */
 }
 
 * {
@@ -43,9 +55,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   transition: background-color 0.5s ease, color 0.5s ease;
   line-height: 1.8;
-  /* Increased breathing room */
   letter-spacing: 0.02em;
-  /* Subtle spacing */
 }
 
 h1,
@@ -59,7 +69,6 @@ h6 {
   line-height: 1.2;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  /* More impactful headings */
 }
 
 .noise-overlay {
@@ -70,7 +79,6 @@ h6 {
   height: 100%;
   pointer-events: none;
   z-index: 9998;
-  /* Below cursor, above content */
   opacity: 0.05;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
@@ -113,4 +121,37 @@ ul {
   background: linear-gradient(to bottom, #fff, #666);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+/* Responsive Utilities */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 1.5rem;
+  }
+
+  .mobile-hidden {
+    display: none !important;
+  }
+
+  .desktop-hidden {
+    display: contents !important;
+    /* Use contents to let children control layout, or simply remove spacing interference */
+  }
+
+  .mobile-nav-controls {
+    display: flex !important;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  /* Typography Scaling */
+  html {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 769px) {
+  .desktop-hidden {
+    display: none !important;
+  }
 }

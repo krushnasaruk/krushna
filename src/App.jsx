@@ -8,6 +8,10 @@ import Contact from './components/Contact';
 import Process from './components/Process';
 import FAQ from './components/FAQ';
 import WallOfFame from './components/WallOfFame';
+import Stats from './components/Stats';
+import Cursor from './components/Cursor';
+import Preloader from './components/Preloader';
+import BackgroundOrbs from './components/BackgroundOrbs';
 import './App.css';
 
 function App() {
@@ -24,9 +28,13 @@ function App() {
   return (
     <div className="app-container">
       <div className="noise-overlay"></div>
+      <BackgroundOrbs />
+      <Preloader />
+      <Cursor />
       <Navbar theme={theme} toggleTheme={toggleTheme} />
       <main>
         <Hero />
+        <Stats />
         <About />
         <Services />
         <Process />

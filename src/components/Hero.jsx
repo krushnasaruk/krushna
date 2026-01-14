@@ -32,21 +32,33 @@ const Hero = () => {
                 style={{ marginTop: '10vh' }}
             >
                 <div style={{ overflow: 'hidden' }}>
-                    <motion.h1 variants={lineVariants} style={{ fontSize: 'clamp(3rem, 10vw, 12rem)', letterSpacing: '-0.03em', lineHeight: 0.9 }}>
-                        SHAPING
+                    <motion.h1 variants={lineVariants} style={{ fontSize: 'clamp(3rem, 10vw, 11rem)', letterSpacing: '-0.02em', lineHeight: 0.9 }}>
+                        ARCHITECTING
                     </motion.h1>
                 </div>
                 <div style={{ overflow: 'hidden' }}>
-                    <motion.h1 variants={lineVariants} style={{ fontSize: 'clamp(3rem, 10vw, 12rem)', letterSpacing: '-0.03em', lineHeight: 0.9, textAlign: 'right', color: 'transparent', WebkitTextStroke: '2px var(--stroke-color)' }}>
-                        FUTURE
+                    <motion.h1 variants={lineVariants} style={{ fontSize: 'clamp(3rem, 10vw, 11rem)', letterSpacing: '-0.02em', lineHeight: 0.9, textAlign: 'right', color: 'transparent', WebkitTextStroke: '1px var(--stroke-color)', fontFamily: 'var(--font-display)' }}>
+                        ACADEMIC
                     </motion.h1>
                 </div>
                 <div style={{ overflow: 'hidden' }}>
-                    <motion.h1 variants={lineVariants} style={{ fontSize: 'clamp(3rem, 10vw, 12rem)', letterSpacing: '-0.03em', lineHeight: 0.9 }}>
-                        MINDS.
+                    <motion.h1 variants={lineVariants} style={{ fontSize: 'clamp(3rem, 10vw, 11rem)', letterSpacing: '-0.02em', lineHeight: 0.9 }}>
+                        LEGACIES.
                     </motion.h1>
                 </div>
             </motion.div>
+
+            <div style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px)',
+                backgroundSize: '50px 50px',
+                pointerEvents: 'none',
+                zIndex: -1
+            }} />
 
             <motion.div
                 initial={{ opacity: 0 }}
