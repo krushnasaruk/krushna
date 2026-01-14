@@ -39,6 +39,7 @@ const Services = () => {
                     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
                     const handleMouseMove = (e) => {
+                        if (window.innerWidth <= 768) return; // Disable on mobile
                         const rect = e.currentTarget.getBoundingClientRect();
                         setMousePosition({
                             x: e.clientX - rect.left,
@@ -72,7 +73,7 @@ const Services = () => {
                             }}
                         >
                             {/* Glow Effect */}
-                            {hoveredService === service.id && (
+                            {hoveredService === service.id && window.innerWidth > 768 && (
                                 <div
                                     style={{
                                         position: 'absolute',
@@ -143,6 +144,17 @@ const Services = () => {
                     }
                     .service-content > div {
                         width: 100% !important;
+                    }
+                }
+                @media (max-width: 400px) {
+                    .service-item {
+                         padding: 1.5rem 0.5rem !important;
+                    }
+                    h2 {
+                        font-size: 1.8rem !important;
+                    }
+                    h3 {
+                        font-size: 1.5rem !important;
                     }
                 }
             `}</style>

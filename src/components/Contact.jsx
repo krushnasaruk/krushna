@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import emailjs from '@emailjs/browser';
+import SocialLinks from './SocialLinks';
 
 const Contact = () => {
     const form = useRef();
@@ -40,7 +41,7 @@ const Contact = () => {
     };
 
     return (
-        <section id="contact" style={{ padding: '8rem 2rem', position: 'relative', overflow: 'hidden' }}>
+        <section id="contact" className="contact-section">
             <div className="container" style={{ maxWidth: '800px', margin: '0 auto' }}>
                 <motion.div
                     initial={{ opacity: 0, y: 50 }}
@@ -56,6 +57,7 @@ const Contact = () => {
                 </motion.div>
 
                 <motion.div
+                    className="contact-form-container"
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true }}
@@ -67,13 +69,6 @@ const Contact = () => {
                                 staggerChildren: 0.2
                             }
                         }
-                    }}
-                    style={{
-                        background: 'rgba(255, 255, 255, 0.02)',
-                        backdropFilter: 'blur(10px)',
-                        padding: '3rem',
-                        borderRadius: '4px',
-                        border: '1px solid var(--color-border)'
                     }}
                 >
                     <form ref={form} onSubmit={sendEmail}>
@@ -135,7 +130,7 @@ const Contact = () => {
                                 fontSize: '1rem',
                                 textTransform: 'uppercase',
                                 letterSpacing: '0.1em',
-                                cursor: 'none',
+                                cursor: 'pointer',
                                 borderRadius: '4px',
                                 marginTop: '1rem',
                                 opacity: status === 'sending' ? 0.7 : 1,
@@ -167,9 +162,11 @@ const Contact = () => {
                 </motion.div>
             </div>
 
-            <footer style={{ marginTop: '5rem', display: 'flex', justifyContent: 'space-between', padding: '0 2rem', color: 'var(--color-dim)', fontSize: '0.9rem', width: '100%', borderTop: '1px solid var(--color-border)', paddingTop: '2rem' }}>
+            <SocialLinks />
+
+            <footer style={{ marginTop: '5rem', display: 'flex', justifyContent: 'space-between', padding: '0 2rem', color: 'var(--color-dim)', fontSize: '0.9rem', width: '100%', borderTop: '1px solid var(--color-border)', paddingTop: '2rem', flexWrap: 'wrap', gap: '1rem' }}>
                 <span>© 2026 Guidance Inc.</span>
-                <span className="hover-target">Instagram / Twitter / LinkedIn</span>
+                <span className="hover-target">Designed for Excellence</span>
             </footer>
         </section>
     );

@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 const About = () => {
     return (
         <section id="about" className="container" style={{ alignItems: 'flex-start' }}>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem' }}>
+            <div className="about-grid">
                 <div>
                     <motion.h2
                         initial={{ opacity: 0, y: 20 }}

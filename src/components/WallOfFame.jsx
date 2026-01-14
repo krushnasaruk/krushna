@@ -17,6 +17,8 @@ const marqueeStudents = [...students, ...students, ...students];
 const WallOfFame = () => {
     const [selectedStudent, setSelectedStudent] = useState(null);
 
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
     return (
         <section id="wall-of-fame" style={{ padding: '8rem 0', overflow: 'hidden', position: 'relative' }}>
             <div className="container" style={{ textAlign: 'center', marginBottom: '4rem' }}>
@@ -27,27 +29,37 @@ const WallOfFame = () => {
             <div className="marquee-container" style={{ display: 'flex', width: '100%', overflow: 'hidden', paddingBottom: '2rem' }}>
                 <motion.div
                     className="marquee-track"
-                    animate={{ x: ["0%", "-50%"] }} // Move halfway because list is tripled
-                    transition={{ repeat: Infinity, ease: "linear", duration: 45 }}
-                    style={{ display: 'flex', gap: '3rem', width: 'max-content', paddingLeft: '3rem' }}
-                    whileHover={{ animationPlayState: 'paused' }}
+                    animate={isMobile ? undefined : { x: ["0%", "-50%"] }} // Disable animation on mobile
+                    transition={isMobile ? undefined : { repeat: Infinity, ease: "linear", duration: 45 }}
+                    style={{
+                        display: 'flex',
+                        gap: '3rem',
+                        width: isMobile ? '100%' : 'max-content',
+                        paddingLeft: isMobile ? '1.5rem' : '3rem',
+                        paddingRight: isMobile ? '1.5rem' : 0,
+                        overflowX: isMobile ? 'auto' : 'visible',
+                        scrollSnapType: isMobile ? 'x mandatory' : 'none',
+                    }}
+                    whileHover={isMobile ? undefined : { animationPlayState: 'paused' }}
                 >
-                    {marqueeStudents.map((student, index) => (
+                    {(isMobile ? students : marqueeStudents).map((student, index) => ( // No triple list on mobile
                         <div
                             key={`${student.id}-${index}`}
                             className="student-card"
                             onClick={() => setSelectedStudent(student)}
                             style={{
-                                width: '320px',
+                                width: isMobile ? '85vw' : '320px', // Fluid width on mobile
                                 height: '480px',
                                 position: 'relative',
                                 flexShrink: 0,
                                 cursor: 'pointer',
-                                borderRadius: '4px', // Sharper corners for academic look
+                                borderRadius: '4px',
                                 overflow: 'hidden',
                                 border: '1px solid var(--color-border)',
                                 background: 'var(--color-bg)',
-                                boxShadow: '0 4px 20px rgba(0,0,0,0.2)'
+                                boxShadow: '0 4px 20px rgba(0,0,0,0.2)',
+                                scrollSnapAlign: isMobile ? 'center' : 'none',
+                                marginRight: isMobile ? '1rem' : 0
                             }}
                         >
                             <div style={{ position: 'absolute', top: '1rem', right: '1rem', zIndex: 2, background: 'var(--color-accent)', color: 'white', padding: '0.25rem 0.75rem', fontSize: '0.8rem', fontWeight: 600, borderRadius: '2px' }}>
@@ -79,6 +91,7 @@ const WallOfFame = () => {
             </div>
 
             {/* Modal */}
+
             <AnimatePresence>
                 {selectedStudent && (
                     <motion.div
