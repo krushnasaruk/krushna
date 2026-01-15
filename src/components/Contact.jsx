@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import emailjs from '@emailjs/browser';
 import SocialLinks from './SocialLinks';
@@ -6,6 +6,16 @@ import SocialLinks from './SocialLinks';
 const Contact = () => {
     const form = useRef();
     const [status, setStatus] = useState('');
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
 
     const sendEmail = (e) => {
         e.preventDefault();
@@ -66,7 +76,7 @@ const Contact = () => {
                         visible: {
                             opacity: 1,
                             transition: {
-                                staggerChildren: 0.2
+                                staggerChildren: isMobile ? 0.05 : 0.2
                             }
                         }
                     }}

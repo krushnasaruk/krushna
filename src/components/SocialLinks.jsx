@@ -1,7 +1,17 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 const SocialLinks = () => {
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
     const links = [
         { name: 'Instagram', url: '#', icon: '📸', color: '#E1306C' },
         { name: 'Facebook', url: '#', icon: 'facebook', color: '#1877F2' },
@@ -25,7 +35,7 @@ const SocialLinks = () => {
                     href={link.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    whileHover={{ y: -5, color: link.color }}
+                    whileHover={isMobile ? undefined : { y: -5, color: link.color }}
                     style={{
                         color: 'var(--color-dim)',
                         transition: 'color 0.3s',

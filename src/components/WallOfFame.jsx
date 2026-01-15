@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const students = [
@@ -16,8 +16,17 @@ const marqueeStudents = [...students, ...students, ...students];
 
 const WallOfFame = () => {
     const [selectedStudent, setSelectedStudent] = useState(null);
+    const [isMobile, setIsMobile] = useState(false);
 
-    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+    useEffect(() => {
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
 
     return (
         <section id="wall-of-fame" style={{ padding: '8rem 0', overflow: 'hidden', position: 'relative' }}>
@@ -33,7 +42,7 @@ const WallOfFame = () => {
                     transition={isMobile ? undefined : { repeat: Infinity, ease: "linear", duration: 45 }}
                     style={{
                         display: 'flex',
-                        gap: '3rem',
+                        gap: isMobile ? '1rem' : '3rem', // Reduced gap for mobile
                         width: isMobile ? '100%' : 'max-content',
                         paddingLeft: isMobile ? '1.5rem' : '3rem',
                         paddingRight: isMobile ? '1.5rem' : 0,
@@ -59,7 +68,6 @@ const WallOfFame = () => {
                                 background: 'var(--color-bg)',
                                 boxShadow: '0 4px 20px rgba(0,0,0,0.2)',
                                 scrollSnapAlign: isMobile ? 'center' : 'none',
-                                marginRight: isMobile ? '1rem' : 0
                             }}
                         >
                             <div style={{ position: 'absolute', top: '1rem', right: '1rem', zIndex: 2, background: 'var(--color-accent)', color: 'white', padding: '0.25rem 0.75rem', fontSize: '0.8rem', fontWeight: 600, borderRadius: '2px' }}>
@@ -82,8 +90,10 @@ const WallOfFame = () => {
                             </div>
 
                             <style>{`
-                                .student-card:hover img { filter: sepia(0%) contrast(100%) scale(1.05); }
-                                .student-card:hover { border-color: var(--color-accent); transform: translateY(-5px); transition: transform 0.3s; }
+                                @media (hover: hover) {
+                                    .student-card:hover img { filter: sepia(0%) contrast(100%) scale(1.05); }
+                                    .student-card:hover { border-color: var(--color-accent); transform: translateY(-5px); transition: transform 0.3s; }
+                                }
                             `}</style>
                         </div>
                     ))}
@@ -100,7 +110,8 @@ const WallOfFame = () => {
                         exit={{ opacity: 0 }}
                         onClick={() => setSelectedStudent(null)}
                         style={{
-                            position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.8)', backdropFilter: 'blur(8px)',
+                            position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.8)',
+                            backdropFilter: isMobile ? 'none' : 'blur(8px)', // No blur on mobile
                             zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem'
                         }}
                     >
